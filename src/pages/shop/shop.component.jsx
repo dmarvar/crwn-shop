@@ -17,15 +17,25 @@ const ShopPage = ({ match, updateCollections }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const collectionRef = firestore.collection("collections");
+    // CONNECTION TO FIREBASE USING SUSBSCRIPTION
+    // const getCollections = () => {
+    //   return collectionRef.onSnapshot(async snapshot => {
+    //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //     updateCollections(collectionsMap);
+    //     setIsLoading(false);
+    //   });
+    // };
+    // CONNECTION TO FIREBASE USE PROMISES
     const getCollections = () => {
-      return collectionRef.onSnapshot(async snapshot => {
+      return collectionRef.get().then(snapshot => {
         const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
         updateCollections(collectionsMap);
         setIsLoading(false);
       });
     };
     getCollections();
-    return getCollections();
+    // DESTROY SUBSCRIPTION ON UNMOUNTING
+    // return getCollections();
   });
   return (
     <div className="shop-page">
