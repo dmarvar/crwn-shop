@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { signUpStart } from "../../redux/user/user.action";
-// import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 import "./sign-up.styles.scss";
 
 const SignUp = ({ signUpUser }) => {
-  const [data, setData] = useState({
+  const [userCredentials, setUserCredentials] = useState({
     displayName: "",
     email: "",
     password: "",
@@ -15,15 +14,20 @@ const SignUp = ({ signUpUser }) => {
   });
   const handleSubmit = async e => {
     e.preventDefault();
-    if (data.password !== data.confirmPassword) {
+    if (userCredentials.password !== userCredentials.confirmPassword) {
       alert("Passwords don't match");
       return;
     }
-    signUpUser(data);
-    setData({ displayName: "", email: "", password: "", confirmPassword: "" });
+    signUpUser(userCredentials);
+    setUserCredentials({
+      displayName: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    });
   };
   const handleChange = e => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
   };
   return (
     <div className="sign-up">
@@ -33,7 +37,7 @@ const SignUp = ({ signUpUser }) => {
         <FormInput
           type="text"
           name="displayName"
-          value={data.displayName}
+          value={userCredentials.displayName}
           onChange={handleChange}
           label="Display Name"
           required
@@ -41,7 +45,7 @@ const SignUp = ({ signUpUser }) => {
         <FormInput
           type="email"
           name="email"
-          value={data.email}
+          value={userCredentials.email}
           onChange={handleChange}
           label="Email"
           required
@@ -49,7 +53,7 @@ const SignUp = ({ signUpUser }) => {
         <FormInput
           type="password"
           name="password"
-          value={data.password}
+          value={userCredentials.password}
           onChange={handleChange}
           label="Password"
           required
@@ -57,7 +61,7 @@ const SignUp = ({ signUpUser }) => {
         <FormInput
           type="password"
           name="confirmPassword"
-          value={data.confirmPassword}
+          value={userCredentials.confirmPassword}
           onChange={handleChange}
           label="Confirm Password"
           required

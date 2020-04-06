@@ -13,7 +13,7 @@ import Header from "./components/header/header.component";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.action";
 
-function App({ currentUser, checkUserSession }) {
+const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
     checkUserSession();
   }, [checkUserSession]);
@@ -34,7 +34,7 @@ function App({ currentUser, checkUserSession }) {
       </Switch>
     </div>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
